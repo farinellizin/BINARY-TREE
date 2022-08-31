@@ -1,13 +1,14 @@
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
 #include <iostream>
+#include "tree.hpp"
 using namespace std;
 typedef struct qData qData;
 typedef struct qBlock qBlock;
 typedef struct Queue Queue;
 
 struct qData {
-    int val;
+    Tree* val;
 };
 
 struct qBlock {

@@ -5,45 +5,50 @@ void treeInit (Tree **t) {
     *t = NULL;
 }
 
-void treeInsert (Tree **t, Data content) {
-    int cont = (*t) -> item.level;
-
+void treeInsert (Tree **t, Data content, int *previousLevel) {
     if (*t == NULL) {
-        new Tree;
+        (*t) = new Tree;
         (*t) -> fd = NULL;
         (*t) -> fe = NULL;
-        content.level = 1;
+        content.level = *previousLevel + 1;
         (*t) -> item = content;
     } else {
-        content.level = cont + 1;
         if ((*t) -> item.value > content.value) {
-            treeInsert((*t) -> fe, content);
+            treeInsert(&(*t) -> fe, content, &(*t) -> item.level);
         } else {
-            treeInsert((*t)->fd, content);
+            treeInsert(&(*t) -> fd, content, &(*t) -> item.level);
         }
     }
 }
 
 int getHeight(Tree **t) {
-    if (t == NULL) {
+    if (*t == NULL) {
         return 0;
     }
 
     Queue aQueue;
     MEQueue(&aQueue);
-    // doQueue(&aQueue, t);
-    Tree aux;
-
+    qData aux;
+    aux.val = *t;
+    doQueue(&aQueue, aux);
+    
+    int cont = 0;
     while(!isQueueEmpty(&aQueue)) {
         deQueue(&aQueue, &aux);
+        *t = aux.val;
+        cout << (*t) -> item.value << "\t" << (*t) ->item.level << endl;
+
         if ((*t) -> fe != NULL) {
-            doQueue(&aQueue, t);
+            aux.val = (*t) -> fe;
+            doQueue(&aQueue, aux);
         }
 
         if ((*t) -> fd != NULL) {
-            doQueue(&aQueue, t);
+            aux.val = (*t) -> fd;
+            doQueue(&aQueue, aux);
         }
+        cont++;
     }
 
-    return aux.item.level;
+    return aux.val -> item.level;
 }

@@ -16,8 +16,7 @@ struct Tree {
 };
 
 void treeInit(Tree **t);
-void treeInsert(Tree **t, Data value);
+void treeInsert(Tree **t, Data value, int *previousLevel);
 int getHeight(Tree **t);
-
 
 #endif

@@ -27,7 +27,8 @@ void deQueue(Queue *q, qData *value) {
         q -> last = q -> first;
     }
 
-    value ->val = aux -> data.val;
+    
+    value -> val = aux -> data.val;
     free(aux);
 }
 
